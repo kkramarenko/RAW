@@ -12,6 +12,8 @@
 #include <netinet/if_ether.h>
 #include <net/ethernet.h>
 #include <linux/if_packet.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include "headers.h"
 
 #define SERV_PORT 7777
@@ -36,6 +38,8 @@ int main(void)
 	struct in_addr saddr;
 	unsigned char mac_source[6] = {0x0c, 0x60, 0x76, 0x6e, 0x5b, 0x2f};
 	unsigned char mac_dest[6] = {0xb8, 0xe8, 0x56, 0x3f, 0xb9, 0x80};
+	struct packet_mreq promisc;
+	struct ifreq ifr;
 
 	memset(&cli, 0, sizeof(cli));
 	sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -44,6 +48,20 @@ int main(void)
 		exit(1);
 	}
 
+//	memset(&promisc, 0, sizeof(struct packet_mreq));
+//	promisc.mr_ifindex = if_nametoindex(ETHER_NAME);
+//	promisc.mr_type = PACKET_MR_PROMISC;	
+//	rc = setsockopt(sock, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &promisc, sizeof(promisc));
+//	memset(&ifr, 0, sizeof(ifr));
+//	ifr.ifr_ifindex = if_nametoindex(ETHER_NAME);
+//	strncpy(ifr.ifr_name, ETHER_NAME,IFNAMSIZ);
+//	ifr.ifr_flags |= IFF_PROMISC;
+//      rc = ioctl(sock, SIOCSIFFLAGS, &ifr);
+//	if (rc < 0) {
+//		perror("Can`t enable promisc mode");
+//		close(sock);
+//		exit(1);
+//	}
 
 	len = sizeof(struct sockaddr_ll);
 	rc = getsockname(sock, (struct sockaddr *) &cli, &len);
@@ -55,6 +73,14 @@ int main(void)
 
 	//printf("ip - > %s port-> %d\n", inet_ntoa(cli.sin_addr), ntohs(cli.sin_port));
 
+
+	//memset(&serv, 0, sizeof(serv));
+	//serv.sll_family = AF_PACKET;
+	//serv.sll_ifindex = if_nametoindex(ETHER_NAME);
+	//serv.sll_protocol = htons(ETH_P_ALL);
+	//serv.sll_pkttype = PACKET_HOST | PACKET_OUTGOING;
+	//bind(sock, (struct sockaddr *)&serv, sizeof(serv));
+	
 	memset(&serv, 0, sizeof(serv));
 	serv.sll_family = AF_PACKET;
 	//serv.sll_protocol =htons( ETH_P_ALL);
