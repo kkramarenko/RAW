@@ -13,6 +13,7 @@
 
 #define SERV_PORT 7777
 #define CLI_PORT 9999
+#define SERV_IP "192.168.88.248"
 #define BUFF_SIZE 64
 #define PACK_SIZE 128
 
@@ -47,7 +48,7 @@ int main(void)
 	memset(&serv, 0, sizeof(serv));
 	serv.sin_family = AF_INET;
 	serv.sin_port = htons(SERV_PORT);
-	serv.sin_addr.s_addr = inet_addr("127.0.0.1");
+	serv.sin_addr.s_addr = inet_addr(SERV_IP);
 
 	packet = calloc(PACK_SIZE, sizeof(char));
 	memmove(packet + 8, buff, strlen(buff) + 1);
