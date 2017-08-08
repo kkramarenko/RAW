@@ -13,7 +13,7 @@
 
 #define SERV_PORT 7777
 #define CLI_PORT 9999
-#define SERV_IP "192.168.88.248"
+#define SERV_IP "192.168.5.35"
 #define BUFF_SIZE 64
 #define PACK_SIZE 128
 

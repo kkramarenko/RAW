@@ -18,8 +18,8 @@
 
 #define SERV_PORT 7777
 #define CLI_PORT 9999
-#define SERV_IP "192.168.88.248"
-#define CLI_IP "192.168.88.247"
+#define SERV_IP "192.168.5.35"
+#define CLI_IP "192.168.5.166"
 #define ETHER_NAME "wlan0"
 #define BUFF_SIZE 64
 #define PACK_SIZE 128
@@ -36,7 +36,9 @@ int main(void)
 	struct udphdr *udph = NULL;
 	struct ether_header *ethh = NULL;
 	struct in_addr saddr;
+	//unsigned char mac_source[6] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
 	unsigned char mac_source[6] = {0x0c, 0x60, 0x76, 0x6e, 0x5b, 0x2f};
+	//unsigned char mac_dest[6] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
 	unsigned char mac_dest[6] = {0xb8, 0xe8, 0x56, 0x3f, 0xb9, 0x80};
 	struct packet_mreq promisc;
 	struct ifreq ifr;
